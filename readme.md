@@ -1,6 +1,13 @@
 # Spring PetClinic Sample Application
 
 ## Getting Started
+
+   Applications required before starting
+   
+      1. Xampp
+      2. Redis
+      3. SpringToolSuite (You can use any prefered tool)
+      4. Git
    
    Clone this project by using the below command
       
