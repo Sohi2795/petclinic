@@ -3,7 +3,7 @@
 ## Getting Started
    
    Clone this project by using the below command
-   git clone https://github.com/Sohi2795/petclinic.git
+      git clone https://github.com/Sohi2795/petclinic.git
 
 ## Database configuration
    This project uses mysql as a backend db to store and retrive the data. You need to install xampp server https://www.apachefriends.org/download.html inorder to access mysql server locally. Once it is done add the required details(url, username and password) in application.properties inorder to connect the spring app to the mysql.
