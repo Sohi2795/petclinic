@@ -3,6 +3,7 @@
 ## Getting Started
    
    Clone this project by using the below command
+      
       git clone https://github.com/Sohi2795/petclinic.git
 
 ## Database configuration
