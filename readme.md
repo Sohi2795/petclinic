@@ -1,5 +1,19 @@
 # Spring PetClinic Sample Application
 
+## Getting Started
+
+   Applications required before starting
+   
+      1. Xampp
+      2. Redis
+      3. SpringToolSuite (You can use any prefered tool)
+      4. Git
+   
+   Clone this project by using the below command
+      
+      git init // if git is not initilized
+      git clone https://github.com/Sohi2795/petclinic.git
+
 ## Database configuration
    This project uses mysql as a backend db to store and retrive the data. You need to install xampp server https://www.apachefriends.org/download.html inorder to access mysql server locally. Once it is done add the required details(url, username and password) in application.properties inorder to connect the spring app to the mysql.
      
