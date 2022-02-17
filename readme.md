@@ -26,5 +26,5 @@ You can then access petclinic here: http://localhost:8080/
 
 
  ## Resolved Two Bugs in the existing project
-    1. Once pet is added to the owner, then if the tries to change the details of the owner it will overwrite the existing pet owner id to null.
+    1. Once pet is added to the owner, then if tries to change the details of the owner it will overwrite the existing pet owner id to null. So once sucessfull update of owner details the pet won't be visible to the owner 
     2. Unable to update pet details
