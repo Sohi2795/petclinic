@@ -20,6 +20,8 @@ import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 import javax.cache.configuration.MutableConfiguration;
 
@@ -51,5 +53,14 @@ class CacheConfiguration {
 	private javax.cache.configuration.Configuration<Object, Object> cacheConfiguration() {
 		return new MutableConfiguration<>().setStatisticsEnabled(true);
 	}
+	
+	 @Bean
+	 public JedisConnectionFactory redisConnectionFactory() {
+	
+	   RedisStandaloneConfiguration config = new RedisStandaloneConfiguration("127.0.0.1", 6379);
+	   return new JedisConnectionFactory(config);
+	    
+	 }
+
 
 }

@@ -18,6 +18,7 @@ package org.springframework.samples.petclinic.owner;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.samples.petclinic.model.NamedEntity;
 
 /**
@@ -25,6 +26,7 @@ import org.springframework.samples.petclinic.model.NamedEntity;
  */
 @Entity
 @Table(name = "types")
+@EnableCaching
 public class PetType extends NamedEntity {
 
 }

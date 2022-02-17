@@ -29,6 +29,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.samples.petclinic.model.Person;
 import org.springframework.util.Assert;
@@ -168,6 +170,10 @@ public class Owner extends Person {
 		pet.addVisit(visit);
 
 		return this;
+	}
+
+	public void setPets(List<Pet> pets) {
+		this.pets.addAll(pets);
 	}
 
 }

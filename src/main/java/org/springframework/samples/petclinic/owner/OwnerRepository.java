@@ -16,10 +16,17 @@
 package org.springframework.samples.petclinic.owner;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Sam Brannen
  * @author Michael Isvy
  */
+
 public interface OwnerRepository extends Repository<Owner, Integer> {
 
 	/**
@@ -43,6 +51,7 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	 */
 	@Query("SELECT ptype FROM PetType ptype ORDER BY ptype.name")
 	@Transactional(readOnly = true)
+	@Cacheable("pets")
 	List<PetType> findPetTypes();
 
 	/**
@@ -55,6 +64,7 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 
 	@Query("SELECT DISTINCT owner FROM Owner owner left join  owner.pets WHERE owner.lastName LIKE :lastName% ")
 	@Transactional(readOnly = true)
+	@Cacheable(value = "owner", key = "{#lastName,#pageable}")
 	Page<Owner> findByLastName(@Param("lastName") String lastName, Pageable pageable);
 
 	/**
@@ -64,12 +74,15 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	 */
 	@Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
 	@Transactional(readOnly = true)
+	@Cacheable(value = "owner", key = "#id")
 	Owner findById(@Param("id") Integer id);
 
 	/**
 	 * Save an {@link Owner} to the data store, either inserting or updating it.
 	 * @param owner the {@link Owner} to save
 	 */
+	
+	@CacheEvict(value = "owner", key = "#owner.getId()")
 	void save(Owner owner);
 
 	/**

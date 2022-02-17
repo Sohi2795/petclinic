@@ -18,8 +18,13 @@ package org.springframework.samples.petclinic.owner;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -79,19 +84,19 @@ class OwnerController {
 		model.put("owner", new Owner());
 		return "owners/findOwners";
 	}
-
+	
 	@GetMapping("/owners")
-	public String processFindForm(@RequestParam(defaultValue = "1") int page, Owner owner, BindingResult result,
+	public String processFindForm(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String lastName, Owner owner, BindingResult result,
 			Model model) {
-
+		  
 		// allow parameterless GET request for /owners to return all records
 		if (owner.getLastName() == null) {
 			owner.setLastName(""); // empty string signifies broadest possible search
 		}
 
 		// find owners by last name
-		String lastName = owner.getLastName();
-		Page<Owner> ownersResults = findPaginatedForOwnersLastName(page, lastName);
+		String lastName1 = owner.getLastName();
+		Page<Owner> ownersResults = findPaginatedForOwnersLastName(page, lastName1);
 		if (ownersResults.isEmpty()) {
 			// no owners found
 			result.rejectValue("lastName", "notFound", "not found");
@@ -104,8 +109,8 @@ class OwnerController {
 		}
 		else {
 			// multiple owners found
-			lastName = owner.getLastName();
-			return addPaginationModel(page, model, lastName, ownersResults);
+			lastName1 = owner.getLastName();
+			return addPaginationModel(page, model, lastName1, ownersResults);
 		}
 	}
 
@@ -142,6 +147,7 @@ class OwnerController {
 		}
 		else {
 			owner.setId(ownerId);
+			owner.setPets(owners.findById(ownerId).getPets());
 			this.owners.save(owner);
 			return "redirect:/owners/{ownerId}";
 		}

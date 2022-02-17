@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Juergen Hoeller
@@ -100,7 +101,12 @@ class PetController {
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			owner.addPet(pet);
+			for(int i = 0; i < owner.getPets().size();i++) {
+				if(owner.getPets().get(i).getId().equals(pet.getId())) {
+					owner.getPets().remove(i);
+					owner.getPets().add(i, pet);
+				}
+			}
 			this.owners.save(owner);
 			return "redirect:/owners/{ownerId}";
 		}
