@@ -4,6 +4,7 @@
    
    Clone this project by using the below command
       
+      git init // if git is not initilized
       git clone https://github.com/Sohi2795/petclinic.git
 
 ## Database configuration
