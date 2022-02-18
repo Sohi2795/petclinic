@@ -22,6 +22,8 @@
 
 You need to start mysql server and redis server before starting the project
 
+You need to add the mysql url, username and password in main class file inorder to load the flyway
+
 You can then access petclinic here: http://localhost:8080/
 
 
