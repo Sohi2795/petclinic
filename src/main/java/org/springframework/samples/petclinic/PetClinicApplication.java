@@ -16,6 +16,7 @@
 
 package org.springframework.samples.petclinic;
 
+import org.flywaydb.core.Flyway;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -30,6 +31,10 @@ public class PetClinicApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PetClinicApplication.class, args);
+		
+		// Create the Flyway instance and point it to the database
+        Flyway flyway = Flyway.configure().dataSource("jdbc:mysql://localhost:3306/petclinic", "username", "password").load();
+        flyway.migrate();
 	}
 
 }
